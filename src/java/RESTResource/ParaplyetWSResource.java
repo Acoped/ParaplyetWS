@@ -5,7 +5,12 @@
  */
 package RESTResource;
 
+import ParaplyModel.DbConnection;
 import ParaplyModel.EnrollCode;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -37,14 +42,32 @@ public class ParaplyetWSResource {
      * Retrieves representation of an instance of RESTResource.ParaplyetWSResource
      * @param test
      * @return an instance of java.lang.String
+     * http://localhost:8080/ParaplyetWS/api/getEnrollCode/I0019N/VT18
      */
     @GET
-    @Path("getEnrollCode/{test}")
+    @Path("getEnrollCode/{courseCode}/{semesterCode}")
     @Produces(MediaType.APPLICATION_JSON)
-    public EnrollCode getEnrollCode(@PathParam("test") String test) {
-        
+    public EnrollCode getEnrollCode(@PathParam("courseCode") String courseCode, 
+                                    @PathParam("semesterCode") String semesterCode) {
+        DbConnection db = new DbConnection();
+        String enrollCode = "nope";
+        try {
+            /*ResultSet rs = db.readSp("SELECT EnrollCode FROM new_table WHERE CourseCode = "
+                    + courseCode
+                    + " AND SemesterCode = "
+                    + semesterCode
+                    + ";");*/
+            ResultSet rs = db.readSp("SELECT EnrollCode FROM new_table;");
+            while (rs.next()) {
+                enrollCode = rs.getString("EnrollCode");
+            }
+        } catch (SQLException ex) {
+            enrollCode="veryWrong";
+            Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(enrollCode);
         EnrollCode ec = new EnrollCode();
-        ec.setEnrollCode("LTU12345"+test);
+        ec.setEnrollCode(enrollCode);
         return ec;
     }
 
