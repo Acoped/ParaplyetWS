@@ -13,6 +13,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -20,7 +21,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Molnet
  */
-@Path("paraplyetWS")
+@Path("api")
 public class ParaplyetWSResource {
 
     @Context
@@ -34,14 +35,16 @@ public class ParaplyetWSResource {
 
     /**
      * Retrieves representation of an instance of RESTResource.ParaplyetWSResource
+     * @param test
      * @return an instance of java.lang.String
      */
     @GET
-    
+    @Path("getEnrollCode/{test}")
     @Produces(MediaType.APPLICATION_JSON)
-    public EnrollCode getEnrollCode() {
+    public EnrollCode getEnrollCode(@PathParam("test") String test) {
+        
         EnrollCode ec = new EnrollCode();
-        ec.setEnrollCode("LTU12345");
+        ec.setEnrollCode("LTU12345"+test);
         return ec;
     }
 
