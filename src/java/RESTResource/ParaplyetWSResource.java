@@ -52,12 +52,12 @@ public class ParaplyetWSResource {
         DbConnection db = new DbConnection();
         String enrollCode = "nope";
         try {
-            /*ResultSet rs = db.readSp("SELECT EnrollCode FROM new_table WHERE CourseCode = "
+            ResultSet rs = db.runSql("SELECT EnrollCode FROM new_table WHERE CourseCode = '"
                     + courseCode
-                    + " AND SemesterCode = "
+                    + "' AND SemesterCode = '"
                     + semesterCode
-                    + ";");*/
-            ResultSet rs = db.runSql("SELECT EnrollCode FROM new_table;");
+                    + "';");
+            //ResultSet rs = db.runSql("SELECT EnrollCode FROM new_table;");
             while (rs.next()) {
                 enrollCode = rs.getString("EnrollCode");
             }
@@ -65,11 +65,11 @@ public class ParaplyetWSResource {
             enrollCode="veryWrong";
             Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            db.closeDbConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            db.closeDbConnection();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         System.out.println(enrollCode);
         EnrollCode ec = new EnrollCode();
         ec.setEnrollCode(enrollCode);
