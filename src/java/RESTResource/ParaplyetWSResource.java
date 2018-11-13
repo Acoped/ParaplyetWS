@@ -49,25 +49,7 @@ public class ParaplyetWSResource {
     @Produces(MediaType.APPLICATION_JSON)
     public EnrollCode getEnrollCode(@PathParam("courseCode") String courseCode, 
                                     @PathParam("semesterCode") String semesterCode) {
-        DbConnection db = new DbConnection();
-        String enrollCode = "No enrollcode exists for that course/semester combo.";
-        
-        try {
-            ResultSet rs = db.runSql("SELECT EnrollCode FROM new_table WHERE CourseCode = '"
-                    + courseCode
-                    + "' AND SemesterCode = '"
-                    + semesterCode
-                    + "';");
-            while (rs.next()) {
-                enrollCode = rs.getString("EnrollCode");
-            }
-        } 
-        catch (SQLException ex) {
-            Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-        EnrollCode ec = new EnrollCode();
-        ec.setEnrollCode(enrollCode);
+        EnrollCode ec = new EnrollCode(courseCode,semesterCode);
         return ec;
     }
 
@@ -75,8 +57,8 @@ public class ParaplyetWSResource {
      * PUT method for updating or creating an instance of ParaplyetWSResource
      * @param content representation for the resource
      */
-    @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(String content) {
-    }
+//    @PUT
+//    @Consumes(MediaType.APPLICATION_XML)
+//    public void putXml(String content) {
+//    }
 }
