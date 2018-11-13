@@ -57,12 +57,17 @@ public class ParaplyetWSResource {
                     + " AND SemesterCode = "
                     + semesterCode
                     + ";");*/
-            ResultSet rs = db.readSp("SELECT EnrollCode FROM new_table;");
+            ResultSet rs = db.runSql("SELECT EnrollCode FROM new_table;");
             while (rs.next()) {
                 enrollCode = rs.getString("EnrollCode");
             }
         } catch (SQLException ex) {
             enrollCode="veryWrong";
+            Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            db.closeDbConnection();
+        } catch (SQLException ex) {
             Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println(enrollCode);

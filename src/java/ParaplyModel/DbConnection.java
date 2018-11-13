@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DbConnection {
     public static String HOST = "jdbc:mysql://localhost:3306/paraplyet?autoReconnect=true&useSSL=false";
@@ -57,5 +58,21 @@ public class DbConnection {
             System.out.println("Class not found"+ cfe);
         }
         return toReturn;
+    }
+    
+    public ResultSet runSql(String sql){
+        ResultSet rs = null;
+        try {
+            dbConnect();
+            Statement stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage( ));
+        }   
+        catch (ClassNotFoundException cfe)   {
+            System.out.println("Class not found"+ cfe);
+        }
+        return rs;
     }
 }
