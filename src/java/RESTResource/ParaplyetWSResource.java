@@ -40,8 +40,9 @@ public class ParaplyetWSResource {
 
     /**
      * Retrieves representation of an instance of RESTResource.ParaplyetWSResource
-     * @param test
-     * @return an instance of java.lang.String
+     * @param courseCode 
+     * @param semesterCode
+     * @return a JSON with enrollCode
      * http://localhost:8080/ParaplyetWS/api/getEnrollCode/I0019N/VT18
      */
     @GET
