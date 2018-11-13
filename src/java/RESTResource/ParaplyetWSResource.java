@@ -50,27 +50,22 @@ public class ParaplyetWSResource {
     public EnrollCode getEnrollCode(@PathParam("courseCode") String courseCode, 
                                     @PathParam("semesterCode") String semesterCode) {
         DbConnection db = new DbConnection();
-        String enrollCode = "nope";
+        String enrollCode = "No enrollcode exists for that course/semester combo.";
+        
         try {
             ResultSet rs = db.runSql("SELECT EnrollCode FROM new_table WHERE CourseCode = '"
                     + courseCode
                     + "' AND SemesterCode = '"
                     + semesterCode
                     + "';");
-            //ResultSet rs = db.runSql("SELECT EnrollCode FROM new_table;");
             while (rs.next()) {
                 enrollCode = rs.getString("EnrollCode");
             }
-        } catch (SQLException ex) {
-            enrollCode="veryWrong";
+        } 
+        catch (SQLException ex) {
             Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        try {
-//            db.closeDbConnection();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ParaplyetWSResource.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        System.out.println(enrollCode);
+       
         EnrollCode ec = new EnrollCode();
         ec.setEnrollCode(enrollCode);
         return ec;
